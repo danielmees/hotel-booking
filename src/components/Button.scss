@@ -1,0 +1,14 @@
+.btn {
+    font-size: 16px;
+    padding: 10px 0;
+    border: none;
+    outline: none;
+    width: 100px;
+    color: #fff;
+    background-color: #01838C;
+    border-radius: 3px;
+
+    &--blue {
+        background-color: #1a2e80;
+    }
+}
