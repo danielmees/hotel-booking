@@ -25,10 +25,20 @@ function App() {
           endDate={endDate}
           onChange={onChange}
         />
-        <Selector handleChange={roomType => setRoomType(roomType.value)} />
+        <Selector handleChange={option => setRoomType(option.value)} />
         <Button label='Search' />
       </section>
       <section className='hotel-list'>
+        <ul>
+          <li>
+            <span>Room 1</span>
+            <Button color='blue' label='Book' />
+          </li>
+          <li>
+            <span>Room 2</span>
+            <Button label='Sold out' disable />
+          </li>
+        </ul>
       </section>
     </div>
   );

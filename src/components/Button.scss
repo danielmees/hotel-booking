@@ -7,8 +7,15 @@
     color: #fff;
     background-color: #01838C;
     border-radius: 3px;
+    cursor: pointer;
 
     &--blue {
         background-color: #1a2e80;
+    }
+
+    &--disable {
+        color: #454545;
+        background-color: #e8e8e8;
+        cursor: not-allowed;
     }
 }
