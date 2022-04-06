@@ -13,6 +13,8 @@ const DatePickerWrapper = ({ startDate, endDate, onChange }) => (
             endDate={endDate}
             className='date-picker-input'
             selectsRange
+            minDate={new Date()}
+            placeholderText="Select two dates"
         /> 
     </div>
 );

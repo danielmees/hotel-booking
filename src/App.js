@@ -6,8 +6,10 @@ import Button from './components/Button';
 
 import './App.scss';
 
+import rooms from './assets/rooms.json';
+
 function App() {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [roomType, setRoomType] = useState('');
 
@@ -16,6 +18,8 @@ function App() {
     setStartDate(start);
     setEndDate(end);
   };
+
+  console.log('rooms', rooms);
 
   return (
     <div className='hotel-booking'>
