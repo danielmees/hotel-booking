@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Selector from './components/Selector';
 import DatePickerWrapper from './components/DatePicker';
 import Button from './components/Button';
+import { addDays, compareDates } from './utils/date';
 
 import './App.scss';
 
@@ -13,13 +14,55 @@ function App() {
   const [minEndDate, setMinEndDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
   const [roomType, setRoomType] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleStartDateChange = date => {
     setStartDate(date); 
-    const newMinEndDate = new Date(date.valueOf());
-    newMinEndDate.setDate(newMinEndDate.getDate() + 1);
+    const newMinEndDate = addDays(date, 1);
     setMinEndDate(newMinEndDate);
   };
+
+  const handleSearch = () => {
+    if (!startDate || !endDate || !roomType || !rooms) return;
+
+    const searchResult = [];
+
+    rooms.forEach(room => {
+      if (room['room-type'] === roomType) {
+        let isRoomAvailable = true;
+        room.booked.forEach(bookDate => {
+          const compareCheckIn = compareDates(startDate, bookDate[1]);
+          const compareCheckOut = compareDates(endDate, bookDate[0]);
+
+          if (!(compareCheckIn === 'same' || compareCheckIn === 'after' || compareCheckOut === 'same' || compareCheckOut === 'before')) {
+            isRoomAvailable = false;
+          }
+        });
+
+        if (isRoomAvailable) {
+          searchResult.push({ room: room.room, isAvailable: true });
+        } else {
+          searchResult.push({ room: room.room, isAvailable: false });
+        }
+
+        setSearchResult(searchResult);
+      }
+    });
+  }
+
+  const renderSearchResultList = () => {
+    if (searchResult.length === 0) {
+      return null;
+    } else {
+      return searchResult.map(room => <li>
+        <span>{room.room}</span>
+        <Button color='blue' 
+          label={room.isAvailable ? 'Book' : 'Sold out'} 
+          disable={!room.isAvailable} 
+        />
+      </li>);
+    }
+  }
   
   return (
     <div className='hotel-booking'>
@@ -41,18 +84,12 @@ function App() {
         <Selector handleChange={option => setRoomType(option.value)} />
         <Button label='Search' 
           disable={!startDate || !endDate || !roomType} 
+          handleClick={handleSearch}
         />
       </section>
       <section className='hotel-list'>
         <ul>
-          <li>
-            <span>Room 1</span>
-            <Button color='blue' label='Book' />
-          </li>
-          <li>
-            <span>Room 2</span>
-            <Button label='Sold out' disable />
-          </li>
+          {renderSearchResultList()}
         </ul>
       </section>
     </div>
