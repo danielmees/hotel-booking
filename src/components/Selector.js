@@ -10,7 +10,7 @@ const options = [
   
 const Selector = ({ handleChange }) => (
     <Select options={options} 
-        placeholder='Select room type...' 
+        placeholder='Select room type' 
         onChange={handleChange} 
         className='room-type-selector'
     />

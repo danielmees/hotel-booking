@@ -4,17 +4,15 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './DatePicker.scss';
 
-const DatePickerWrapper = ({ startDate, endDate, onChange }) => (
+const DatePickerWrapper = ({ date, handleChange, placeholderText, minDate }) => (
     <div>
         <DatePicker
-            selected={startDate}
-            onChange={onChange}
-            startDate={startDate}
-            endDate={endDate}
+            dateFormat="dd/MM/yyyy"
+            selected={date}
+            onChange={handleChange}
             className='date-picker-input'
-            selectsRange
-            minDate={new Date()}
-            placeholderText="Select two dates"
+            minDate={minDate}
+            placeholderText={placeholderText}
         /> 
     </div>
 );
