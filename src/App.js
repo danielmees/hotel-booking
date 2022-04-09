@@ -54,13 +54,14 @@ function App() {
     if (searchResult.length === 0) {
       return null;
     } else {
-      return searchResult.map(room => <li>
+      const lists = searchResult.map(room => <li key={room.room}>
         <span>{room.room}</span>
         <Button color='blue' 
           label={room.isAvailable ? 'Book' : 'Sold out'} 
           disable={!room.isAvailable} 
         />
       </li>);
+      return <ul>{lists}</ul>;
     }
   }
   
@@ -88,9 +89,7 @@ function App() {
         />
       </section>
       <section className='hotel-list'>
-        <ul>
-          {renderSearchResultList()}
-        </ul>
+        {renderSearchResultList()}
       </section>
     </div>
   );
